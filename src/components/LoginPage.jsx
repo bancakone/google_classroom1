@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiUser, FiLock, FiMail, FiEye, FiEyeOff } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -21,6 +22,11 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Données de connexion:', formData);
+  };
+
+  const handleForgotPassword = () => {
+    console.log('Mot de passe oublié cliqué');
+    // Ajoutez ici la logique pour gérer le mot de passe oublié
   };
 
   return (
@@ -95,7 +101,13 @@ const LoginPage = () => {
                 />
                 <label htmlFor="remember">Se souvenir de moi</label>
               </div>
-              <a href="#" className="forget-password">Mot de passe oublié?</a>
+              <button 
+                type="button"
+                className="forget-password"
+                onClick={handleForgotPassword}
+              >
+                Mot de passe oublié?
+              </button>
             </div>
 
             <button type="submit" className="login-button">
@@ -115,7 +127,7 @@ const LoginPage = () => {
             </div>
 
             <p className="signup-link">
-              Pas encore membre? <a href="#">S'inscrire</a>
+              Pas encore membre? <Link to="/register">S'inscrire</Link>
             </p>
           </form>
         </div>
