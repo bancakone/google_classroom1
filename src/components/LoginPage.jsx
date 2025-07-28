@@ -16,9 +16,9 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -65,7 +65,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="form-container">
         <div className="login-card">
             <Link to="/home" className="back-button text-align-center">
@@ -107,8 +107,8 @@ const LoginPage = () => {
                   placeholder="••••••••"
                   required
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
                 >

@@ -1,8 +1,9 @@
-import React from 'react';
-import { Route, BrowserRouter as Router, Routes,} from "react-router-dom";
-import LoginPage from './components/LoginPage';
-import SignPage from './components/SignPage';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./components/Home";
+import LoginPage from "./components/LoginPage";
+import ProfDashboard from "./components/ProfDashboard";
+import SignPage from "./components/SignPage";
+import EtuDashboard from "./EtuDashboard";
 // import RegisterPage from "./components/RegisterPage";
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/profdashboard" element={<ProfDashboard />} />
+          <Route path="/etudashboard" element={<EtuDashboard />} />
           {/* <Route path="/register" element={<RegisterPage />} /> */}
 
           {/* Protected Routes - Wrapped with Layout */}
