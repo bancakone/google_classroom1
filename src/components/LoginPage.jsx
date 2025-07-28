@@ -5,17 +5,17 @@ import './LoginPage.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    rememberMe: false
+    username: "",
+    password: "",
+    rememberMe: false,
   });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -42,7 +42,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="form-container">
         <div className="login-card">
           <div className="card-header">
@@ -80,8 +80,8 @@ const LoginPage = () => {
                   placeholder="••••••••"
                   required
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
                 >
