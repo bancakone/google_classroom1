@@ -45,12 +45,13 @@ const SignPage = () => {
       
       <div className="form-container">
         <div className="signup-card">
-          {/* <Link to="/login" className="back-button">
-            <FiArrowLeft /> Retour à la connexion
-          </Link> */}
+           <Link to="/home" className="back-button text-align-center">
+                          <FiArrowLeft /> Accueil
+                                </Link>
 
           <div className="card-header">
             <h1>Créez votre compte</h1>
+            
           </div>
 
           <form onSubmit={handleSubmit}>
