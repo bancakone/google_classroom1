@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { FiUser, FiLock, FiMail, FiEye, FiEyeOff } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiUser, FiLock, FiMail, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './LoginPage.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '', // Changé de username à email pour correspondre au backend
     password: '',
     rememberMe: false
   });
-  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -19,15 +22,35 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Données de connexion:', formData);
+    setLoading(true);
+    setError('');
+    
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email: formData.email,
+        password: formData.password
+      });
+      
+      // Stocker le token et les infos utilisateur
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      
+      // Redirection après connexion réussie
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Erreur de connexion');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleForgotPassword = () => {
     console.log('Mot de passe oublié cliqué');
     // Ajoutez ici la logique pour gérer le mot de passe oublié
   };
+
 
   return (
     <div className="page-container">
@@ -45,14 +68,18 @@ const LoginPage = () => {
       
       <div className="form-container">
         <div className="login-card">
+            <Link to="/home" className="back-button text-align-center">
+                <FiArrowLeft /> Accueil
+                      </Link>
           <div className="card-header">
             <h1>Welcome Back</h1>
-            <p className="subtitle">Connectez-vous à votre compte</p>
+         
           </div>
+  {error && <div className="error-message">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div className="input-group">
-              <label htmlFor="username">
+              <label htmlFor="email">
                 <FiMail className="input-icon" /> Email
               </label>
               <input
