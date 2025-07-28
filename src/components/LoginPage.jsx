@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { FiUser, FiLock, FiMail, FiEye, FiEyeOff } from 'react-icons/fi';
-import './LoginPage.css';
+import { useState } from "react";
+import { FiEye, FiEyeOff, FiLock, FiMail, FiUser } from "react-icons/fi";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    rememberMe: false
+    username: "",
+    password: "",
+    rememberMe: false,
   });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Données de connexion:', formData);
+    console.log("Données de connexion:", formData);
   };
 
   return (
@@ -36,7 +36,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="form-container">
         <div className="login-card">
           <div className="card-header">
@@ -74,8 +74,8 @@ const LoginPage = () => {
                   placeholder="••••••••"
                   required
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -95,7 +95,9 @@ const LoginPage = () => {
                 />
                 <label htmlFor="remember">Se souvenir de moi</label>
               </div>
-              <a href="#" className="forget-password">Mot de passe oublié?</a>
+              <button type="button" className="link-button">
+                Mot de passe oublié ?
+              </button>
             </div>
 
             <button type="submit" className="login-button">
