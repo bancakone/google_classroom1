@@ -1,6 +1,8 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes,} from "react-router-dom";
+import LoginPage from './components/LoginPage';
+import SignPage from './components/SignPage';
 import Home from "./components/Home";
-import LoginPage from "./components/LoginPage";
 // import RegisterPage from "./components/RegisterPage";
 
 function App() {
@@ -8,11 +10,11 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<SignPage />} />
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<LoginPage />} />
           {/* <Route path="/register" element={<RegisterPage />} /> */}
 
           {/* Protected Routes - Wrapped with Layout */}
