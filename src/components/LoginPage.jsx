@@ -12,6 +12,7 @@ const LoginPage = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // <-- Ajouté ici
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -70,10 +71,9 @@ const LoginPage = () => {
         <div className="login-card">
             <Link to="/home" className="back-button text-align-center">
                 <FiArrowLeft /> Accueil
-                      </Link>
+            </Link>
           <div className="card-header">
             <h1>Welcome Back</h1>
-         
           </div>
   {error && <div className="error-message">{error}</div>}
 
@@ -84,9 +84,9 @@ const LoginPage = () => {
               </label>
               <input
                 type="email"
-                id="username"
-                name="username"
-                value={formData.username}
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 placeholder="votre@email.com"
                 required
@@ -137,8 +137,8 @@ const LoginPage = () => {
               </button>
             </div>
 
-            <button type="submit" className="login-button">
-              Connexion
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? "Connexion..." : "Connexion"}
             </button>
 
             <div className="social-login">

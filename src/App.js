@@ -4,6 +4,7 @@ import LoginPage from "./components/LoginPage";
 import ProfDashboard from "./components/ProfDashboard";
 import SignPage from "./components/SignPage";
 import EtuDashboard from "./EtuDashboard";
+import GroupDashboard from "./components/GroupDashboard";
 // import RegisterPage from "./components/RegisterPage";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profdashboard" element={<ProfDashboard />} />
           <Route path="/etudashboard" element={<EtuDashboard />} />
+          <Route path="/bref" element={<GroupDashboard />} />
           {/* <Route path="/register" element={<RegisterPage />} /> */}
 
           {/* Protected Routes - Wrapped with Layout */}
