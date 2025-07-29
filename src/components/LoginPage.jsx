@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
-import { FiUser, FiLock, FiMail, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './LoginPage.css';
+import axios from "axios";
+import { useState } from "react";
+import {
+  FiArrowLeft,
+  FiEye,
+  FiEyeOff,
+  FiLock,
+  FiMail,
+  FiUser,
+} from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: '', // Changé de username à email pour correspondre au backend
-    password: '',
-    rememberMe: false
+    email: "",
+    password: "",
+    role: "professeur", // Valeur par défaut
+    rememberMe: false,
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // <-- Ajouté ici
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,56 +34,55 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        email: formData.email,
-        password: formData.password
-      });
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        {
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        }
+      );
+
+      // Stockage des données utilisateur
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       
-      // Stocker le token et les infos utilisateur
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Redirection après connexion réussie
-      navigate('/dashboard');
+      // Redirection en fonction du rôle
+      if (response.data.user.role === "professeur") {
+        navigate("/professor-dashboard");
+      } else {
+        navigate("/student-dashboard");
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur de connexion');
+      setError(err.response?.data?.message || "Erreur de connexion");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = () => {
-    console.log('Mot de passe oublié cliqué');
-    // Ajoutez ici la logique pour gérer le mot de passe oublié
-  };
-
-
   return (
     <div className="page-container">
       <div className="illustration-container">
         <div className="illustration-content">
-          <h2>Rejoignez notre communauté créative</h2>
-          <p>Partagez vos œuvres et découvrez des talents inspirants</p>
-          <div className="decorative-shapes">
-            <div className="shape1"></div>
-            <div className="shape2"></div>
-            <div className="shape3"></div>
-          </div>
+          <h2>Plateforme de Gestion de Projets</h2>
+          <p>Connectez-vous pour accéder à votre espace</p>
         </div>
       </div>
 
       <div className="form-container">
         <div className="login-card">
-            <Link to="/home" className="back-button text-align-center">
-                <FiArrowLeft /> Accueil
-            </Link>
+          <Link to="/" className="back-button">
+            <FiArrowLeft /> Accueil
+          </Link>
+          
           <div className="card-header">
-            <h1>Welcome Back</h1>
+            <h1>Connexion</h1>
           </div>
-  {error && <div className="error-message">{error}</div>}
+          
+          {error && <div className="error-message">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div className="input-group">
@@ -84,11 +91,9 @@ const LoginPage = () => {
               </label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="votre@email.com"
                 required
               />
             </div>
@@ -100,11 +105,9 @@ const LoginPage = () => {
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
-                  id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
                   required
                 />
                 <button
@@ -117,44 +120,39 @@ const LoginPage = () => {
               </div>
             </div>
 
+            <div className="input-group">
+              <label htmlFor="role">
+                <FiUser className="input-icon" /> Rôle
+              </label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="professeur">Professeur</option>
+                <option value="etudiant">Étudiant</option>
+              </select>
+            </div>
+
             <div className="options">
-              <div className="remember-me">
+              <label className="remember-me">
                 <input
                   type="checkbox"
-                  id="remember"
                   name="rememberMe"
                   checked={formData.rememberMe}
                   onChange={handleChange}
                 />
-                <label htmlFor="remember">Se souvenir de moi</label>
-              </div>
-              <button 
-                type="button"
-                className="forget-password"
-                onClick={handleForgotPassword}
-              >
-                Mot de passe oublié?
-              </button>
+                Se souvenir de moi
+              </label>
             </div>
 
             <button type="submit" className="login-button" disabled={loading}>
-              {loading ? "Connexion..." : "Connexion"}
+              {loading ? "Connexion..." : "Se connecter"}
             </button>
 
-            <div className="social-login">
-              <p>Ou connectez-vous avec</p>
-              <div className="social-icons">
-                <button type="button" className="social-btn google">
-                  <FiMail /> Google
-                </button>
-                <button type="button" className="social-btn facebook">
-                  <FiUser /> Facebook
-                </button>
-              </div>
-            </div>
-
             <p className="signup-link">
-              Pas encore membre? <Link to="/register">S'inscrire</Link>
+              Pas encore inscrit? <Link to="/register">Créer un compte</Link>
             </p>
           </form>
         </div>

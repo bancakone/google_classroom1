@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { FiUser, FiLock, FiMail, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './SignPage.css';
 
 const SignPage = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    nom: '',
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'etudiant',
     acceptTerms: false
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showTermsModal, setShowTermsModal] = useState(false);
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -24,55 +27,77 @@ const SignPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Données d\'inscription:', formData);
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    if (!formData.acceptTerms) {
+      setError('Vous devez accepter les conditions');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      await axios.post('http://localhost:5000/register', {
+        nom: formData.nom,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role
+      });
+
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Erreur lors de l\'inscription');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="page-container">
       <div className="illustration-container">
         <div className="illustration-content">
-          <h2>Rejoignez notre communauté</h2>
-          <p>Créez votre compte et commencez à partager vos créations</p>
-          <div className="decorative-shapes">
-            <div className="shape1"></div>
-            <div className="shape2"></div>
-            <div className="shape3"></div>
-          </div>
+          <h2>Rejoignez notre plateforme</h2>
+          <p>Créez votre compte pour commencer</p>
         </div>
       </div>
       
       <div className="form-container">
         <div className="signup-card">
-           <Link to="/home" className="back-button text-align-center">
-                          <FiArrowLeft /> Accueil
-                                </Link>
+          <Link to="/" className="back-button">
+            <FiArrowLeft /> Accueil
+          </Link>
 
           <div className="card-header">
-            <h1>Créez votre compte</h1>
-            
+            <h1>Inscription</h1>
           </div>
+
+          {error && <div className="error-message">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div className="input-group">
-              <label htmlFor="fullName">
+              <label htmlFor="nom">
                 <FiUser className="input-icon" /> Nom complet
               </label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
+                id="nom"
+                name="nom"
+                value={formData.nom}
                 onChange={handleChange}
-                placeholder="Votre nom complet"
                 required
               />
             </div>
 
             <div className="input-group">
               <label htmlFor="email">
-                <FiMail className="input-icon" /> Adresse email
+                <FiMail className="input-icon" /> Email
               </label>
               <input
                 type="email"
@@ -80,9 +105,24 @@ const SignPage = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="votre@email.com"
                 required
               />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="role">
+                <FiUser className="input-icon" /> Rôle
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="etudiant">Étudiant</option>
+                <option value="professeur">Professeur</option>
+              </select>
             </div>
 
             <div className="input-group">
@@ -96,7 +136,6 @@ const SignPage = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
                   required
                   minLength="8"
                 />
@@ -108,7 +147,6 @@ const SignPage = () => {
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>
               </div>
-              
             </div>
 
             <div className="input-group">
@@ -122,7 +160,6 @@ const SignPage = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  placeholder="••••••••"
                   required
                 />
                 <button 
@@ -145,27 +182,12 @@ const SignPage = () => {
                 required
               />
               <label htmlFor="acceptTerms">
-                J'accepte les{' '}
-                <button 
-                  type="button" 
-                  className="text-link"
-                  onClick={() => setShowTermsModal(true)}
-                >
-                  conditions d'utilisation
-                </button>{' '}
-                et la{' '}
-                <button 
-                  type="button" 
-                  className="text-link"
-                  onClick={() => setShowPrivacyModal(true)}
-                >
-                  politique de confidentialité
-                </button>
+                J'accepte les conditions d'utilisation
               </label>
             </div>
 
-            <button type="submit" className="signup-button">
-              S'inscrire
+            <button type="submit" className="signup-button" disabled={loading}>
+              {loading ? 'Inscription en cours...' : 'S\'inscrire'}
             </button>
 
             <div className="login-redirect">
@@ -174,27 +196,6 @@ const SignPage = () => {
           </form>
         </div>
       </div>
-
-      {/* Modales pour les conditions */}
-      {showTermsModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Conditions d'utilisation</h3>
-            <p>Contenu des conditions...</p>
-            <button onClick={() => setShowTermsModal(false)}>Fermer</button>
-          </div>
-        </div>
-      )}
-
-      {showPrivacyModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Politique de confidentialité</h3>
-            <p>Contenu de la politique...</p>
-            <button onClick={() => setShowPrivacyModal(false)}>Fermer</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

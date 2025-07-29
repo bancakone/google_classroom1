@@ -1,0 +1,227 @@
+/* Structure de base */
+.works-section {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.controls input,
+.controls select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Tableau des travaux */
+.works-table {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.table-header,
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 0.8fr 1.5fr;
+  gap: 16px;
+  padding: 12px 16px;
+  align-items: center;
+}
+
+.table-header {
+  background: #f5f5f5;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table-row {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.col {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Badge de statut */
+.status-badge {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.status-badge.en-cours {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-badge.a-corriger {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-badge.en-revision {
+  background: #fff8e1;
+  color: #ff8f00;
+}
+
+.status-badge.corrige {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Boutons */
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.btn.primary {
+  background: #1976d2;
+  color: white;
+}
+
+.btn.outline {
+  background: white;
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.btn.danger {
+  background: #d32f2f;
+  color: white;
+}
+
+/* Modales */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-actions,
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* États */
+.error {
+  color: #d32f2f;
+  background: #fde7e7;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+}

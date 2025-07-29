@@ -22,8 +22,8 @@ function App() {
           <Route path="/profdashboard" element={<ProfDashboard />} />
           <Route path="/etudashboard" element={<EtuDashboard />} />
           <Route path="/bref" element={<GroupDashboard />} />
-           <Route path="/bref1" element={<ProfessorDashboard/>} />
-           <Route path="/bref2" element={<EtudiantDashboard/>} />
+          <Route path="/professor-dashboard" element={<ProfessorDashboard />} />
+          <Route path="/student-dashboard" element={<EtudiantDashboard />} />
           {/* <Route path="/register" element={<RegisterPage />} /> */}
 
           {/* Protected Routes - Wrapped with Layout */}
