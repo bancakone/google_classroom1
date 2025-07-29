@@ -5,6 +5,8 @@ import ProfDashboard from "./components/ProfDashboard";
 import SignPage from "./components/SignPage";
 import EtuDashboard from "./EtuDashboard";
 import GroupDashboard from "./components/GroupDashboard";
+import ProfessorDashboard from "./components/ProfessorDashboard";
+import EtudiantDashboard from "./components/EtudiantDashboard";
 // import RegisterPage from "./components/RegisterPage";
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path="/profdashboard" element={<ProfDashboard />} />
           <Route path="/etudashboard" element={<EtuDashboard />} />
           <Route path="/bref" element={<GroupDashboard />} />
+           <Route path="/bref1" element={<ProfessorDashboard/>} />
+           <Route path="/bref2" element={<EtudiantDashboard/>} />
           {/* <Route path="/register" element={<RegisterPage />} /> */}
 
           {/* Protected Routes - Wrapped with Layout */}
