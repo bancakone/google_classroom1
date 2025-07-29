@@ -20,7 +20,7 @@ FiChevronRight,
   FiMessageCircle,
   FiX
 } from 'react-icons/fi';
-import './ProfessorDashboard.css';
+import './Bref.css';
 
 const ProfessorDashboard = () => {
   const [activeTab, setActiveTab] = useState('groups');
@@ -426,18 +426,8 @@ const [currentCourse, setCurrentCourse] = useState('');
           <p className="subtitle">Gestion des groupes et projets de recherche</p>
         </div>
         <div className="header-actions">
-          <div className="search-box">
-            <FiSearch className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="Rechercher groupes, étudiants..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <button className="btn primary" onClick={() => setShowGroupForm(true)}>
-            <FiPlus /> Nouveau groupe
-          </button>
+         
+        
         </div>
       </header>
 
@@ -822,6 +812,16 @@ const [currentCourse, setCurrentCourse] = useState('');
   >
     <FiMessageSquare /> Messages
   </button>
+  <div className="search-box">
+            <FiSearch className="search-icon" />
+            <input 
+              type="text" 
+              placeholder="Rechercher groupes, étudiants..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+              
 </nav>
 
       {/* Section Statistiques */}
@@ -850,26 +850,15 @@ const [currentCourse, setCurrentCourse] = useState('');
            <div className="groups-section">
                   <div className="section-header">
                     <h2>Vos groupes de recherche</h2>
-                    <div className="header-actions">
-                      <button className="btn primary" onClick={() => setShowCodeGenerator(true)}>
-                        <FiKey /> Générer des codes
-                      </button>
-
-                    </div>
+                            <button className="btn primary" onClick={() => setShowGroupForm(true)}>
+            <FiPlus /> Nouveau groupe
+          </button>
                   </div>
                  {activeTab === 'students' && (
                 <div className="students-section">
                   <div className="section-header">
                     <h2>Liste des étudiants</h2>
-                    <div className="search-box">
-                      <FiSearch className="search-icon" />
-                      <input 
-                        type="text" 
-                        placeholder="Rechercher un étudiant..." 
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                      />
-                    </div>
+                    
                   </div>
     
     <div className="students-table">
